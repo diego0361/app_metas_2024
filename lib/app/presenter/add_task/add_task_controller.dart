@@ -23,7 +23,15 @@ class AddTaskController extends GetxController with LoaderManager {
   @override
   void onInit() {
     super.onInit();
-    // Carregar as tarefas ao iniciar o controlador
+    var taskToEdit = Get.arguments as TaskModel?;
+    if (taskToEdit != null) {
+      titleController.text = taskToEdit.title ?? '';
+      descriptionController.text = taskToEdit.description ?? '';
+      deadlineController.text = taskToEdit.deadline?.toLocal().toString() ?? '';
+      orderOfImportanceController.text =
+          taskToEdit.orderOfImportance?.toString() ?? '';
+      priorityOrderController.text = taskToEdit.priorityOrder?.toString() ?? '';
+    }
     loadTasks();
   }
 
@@ -54,7 +62,12 @@ class AddTaskController extends GetxController with LoaderManager {
         checked: false,
       );
 
-      await addTaskRepository.addTask(task);
+      if (Get.arguments == null) {
+        await addTaskRepository.addTask(task);
+      } else {
+        task.id = (Get.arguments as TaskModel).id;
+        await addTaskRepository.updateTask(task);
+      }
 
       titleController.clear();
       deadlineController.clear();
@@ -72,8 +85,22 @@ class AddTaskController extends GetxController with LoaderManager {
 
   Future<void> updateTask(TaskModel task) async {
     try {
+      String deadlineString = deadlineController.text;
+      DateTime? deadline;
+
+      if (RegExp(r'\d{2}/\d{2}/\d{4}').hasMatch(deadlineString)) {
+        List<String> parts = deadlineString.split('/');
+        deadlineString = '${parts[2]}-${parts[1]}-${parts[0]}';
+        deadline = DateTime.tryParse(deadlineString);
+      } else {
+        return;
+      }
+
       task.title = 'Novo Título';
       task.description = 'Nova Descrição';
+      task.deadline = deadline;
+      task.orderOfImportance = 0;
+      task.priorityOrder = 0;
 
       await addTaskRepository.updateTask(task);
 

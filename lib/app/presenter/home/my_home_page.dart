@@ -79,11 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
             var task = homeController.tasks[index];
             return GetBuilder<MyHomeController>(builder: (controll) {
               return CartaoTarefa(
+                onPressUpdate: () {
+                  homeController.addOrUpdateTask();
+                },
                 onPressedDelete: () {
                   homeController.deleteTask(task.id);
                 },
                 task: task,
-                onTap: () {},
               );
             });
           },

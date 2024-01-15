@@ -30,7 +30,9 @@ class AddTaskRepository {
 
   Future<void> updateTask(TaskModel task) async {
     try {
-      await _tasksCollection.doc(task.title).update(task.toMap());
+      await _tasksCollection
+          .doc(task.id)
+          .set(task.toMap(), SetOptions(merge: true));
     } catch (e) {
       debugPrint('Erro ao atualizar a tarefa: $e');
     }
@@ -39,7 +41,6 @@ class AddTaskRepository {
   Future<void> deleteTask(String taskId) async {
     try {
       await _tasksCollection.doc(taskId).delete();
-      
     } catch (e) {
       debugPrint('Erro ao excluir a tarefa: $e');
     }
