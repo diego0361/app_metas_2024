@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:primeiro_2024/app/core/themes/app_colors.dart';
-import 'package:primeiro_2024/app/presenter/add_task/add_task_page.dart';
-import 'package:primeiro_2024/app/presenter/home/my_home_controller.dart';
 
+import '../../core/themes/app_colors.dart';
+import '../add_task/add_task_page.dart';
+import 'my_home_controller.dart';
 import 'widgets/cartao_tarefa.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -71,15 +71,21 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      backgroundColor: AppColors.boddyBackGroundColor,
       body: Obx(
         () => ListView.builder(
           itemCount: homeController.tasks.length,
           itemBuilder: (context, index) {
             var task = homeController.tasks[index];
-            return CartaoTarefa(
-              task: task,
-              onTap: () {},
-            );
+            return GetBuilder<MyHomeController>(builder: (controll) {
+              return CartaoTarefa(
+                onPressedDelete: () {
+                  homeController.deleteTask(task.id);
+                },
+                task: task,
+                onTap: () {},
+              );
+            });
           },
         ),
       ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:primeiro_2024/app/infra/models/task_model.dart';
-import 'package:primeiro_2024/app/presenter/add_task/add_task_controller.dart';
+
+import '../../../infra/models/task_model.dart';
+import '../../add_task/add_task_controller.dart';
 
 class CartaoTarefa extends StatelessWidget {
   final TaskModel task;
   final VoidCallback? onTap;
+  final VoidCallback onPressedDelete;
   final AddTaskController? controller;
 
   const CartaoTarefa({
@@ -12,6 +14,7 @@ class CartaoTarefa extends StatelessWidget {
     required this.task,
     this.onTap,
     this.controller,
+    required this.onPressedDelete,
   }) : super(key: key);
 
   @override
@@ -43,9 +46,7 @@ class CartaoTarefa extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: InkWell(
-              onTap: () {
-                controller?.deleteTask(task.id ?? '');
-              },
+              onTap: onPressedDelete,
               child: const Icon(
                 Icons.delete,
               ),

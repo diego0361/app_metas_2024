@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:primeiro_2024/app/core/themes/app_colors.dart';
-import 'package:primeiro_2024/app/presenter/add_task/add_task_controller.dart';
-import 'package:primeiro_2024/app/shared/custom_form_field.dart';
+
+import '../../core/themes/app_colors.dart';
+import '../../shared/custom_form_field.dart';
+import 'add_task_controller.dart';
 
 // ignore: must_be_immutable
 class AddTaskPage extends GetView<AddTaskController> {

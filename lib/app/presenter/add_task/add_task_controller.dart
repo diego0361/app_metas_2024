@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:primeiro_2024/app/infra/models/task_model.dart';
-import 'package:primeiro_2024/app/infra/repositories/add_task_repository.dart';
-import 'package:primeiro_2024/app/shared/loader_manager.dart';
 
+import '../../infra/models/task_model.dart';
+import '../../infra/repositories/add_task_repository.dart';
+import '../../shared/loader_manager.dart';
 import '../home/my_home_controller.dart';
 
 class AddTaskController extends GetxController with LoaderManager {
@@ -72,7 +72,6 @@ class AddTaskController extends GetxController with LoaderManager {
   Future<void> deleteTask(String taskId) async {
     try {
       await addTaskRepository.deleteTask(taskId);
-      update();
     } catch (e) {
       debugPrint('Erro ao excluir a tarefa: $e');
     }

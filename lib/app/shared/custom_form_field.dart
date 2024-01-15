@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:primeiro_2024/app/core/themes/app_colors.dart';
+
+import '../core/themes/app_colors.dart';
 
 class CustomFormField extends StatelessWidget {
   final String? title;
