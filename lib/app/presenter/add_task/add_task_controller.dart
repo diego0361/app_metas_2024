@@ -14,6 +14,7 @@ class AddTaskController extends GetxController with LoaderManager {
   final TextEditingController orderOfImportanceController =
       TextEditingController();
   final TextEditingController priorityOrderController = TextEditingController();
+  final TextEditingController deadlineController = TextEditingController();
 
   final RxList<TaskModel> tasks = <TaskModel>[].obs;
 
@@ -32,9 +33,21 @@ class AddTaskController extends GetxController with LoaderManager {
 
   Future<void> addTask() async {
     try {
+      String deadlineString = deadlineController.text;
+      DateTime? deadline;
+
+      if (RegExp(r'\d{2}/\d{2}/\d{4}').hasMatch(deadlineString)) {
+        List<String> parts = deadlineString.split('/');
+        deadlineString = '${parts[2]}-${parts[1]}-${parts[0]}';
+        deadline = DateTime.tryParse(deadlineString);
+      } else {
+        return;
+      }
+
       TaskModel task = TaskModel(
         title: titleController.text,
         description: descriptionController.text,
+        deadline: deadline,
         createAt: DateTime.now(),
         orderOfImportance: int.parse(orderOfImportanceController.text),
         priorityOrder: int.parse(priorityOrderController.text),
@@ -44,6 +57,7 @@ class AddTaskController extends GetxController with LoaderManager {
       await addTaskRepository.addTask(task);
 
       titleController.clear();
+      deadlineController.clear();
       descriptionController.clear();
       orderOfImportanceController.clear();
       priorityOrderController.clear();
