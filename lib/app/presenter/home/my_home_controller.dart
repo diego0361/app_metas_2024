@@ -26,26 +26,6 @@ class MyHomeController extends GetxController with LoaderManager {
     }
   }
 
-  Future<void> addTask(TaskModel task) async {
-    try {
-      await addTaskRepository.addTask(task);
-
-      await loadTasks();
-    } catch (e) {
-      debugPrint('Erro ao adicionar a tarefa: $e');
-    }
-  }
-
-  Future<void> updateTask(TaskModel task) async {
-    try {
-      await addTaskRepository.updateTask(task);
-
-      await loadTasks();
-    } catch (e) {
-      debugPrint('Erro ao atualizar a tarefa: $e');
-    }
-  }
-
   Future<void> deleteTask(String? taskId) async {
     try {
       await addTaskRepository.deleteTask(taskId!);
