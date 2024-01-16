@@ -30,13 +30,13 @@ class CartaoTarefa extends StatelessWidget {
           Column(
             children: [
               Text(
-                task.title ?? '',
+                task.title,
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               Text(
-                task.description ?? '',
+                task.description,
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,

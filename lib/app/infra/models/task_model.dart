@@ -3,9 +3,9 @@ import 'dart:convert';
 
 class TaskModel {
   String? id;
-  String? title;
-  String? description;
-  DateTime? deadline;
+  final String title;
+  final String description;
+  final DateTime deadline;
   DateTime? createAt;
   int? orderOfImportance;
   int? priorityOrder;
@@ -13,9 +13,9 @@ class TaskModel {
 
   TaskModel({
     this.id,
-    this.title,
-    this.description,
-    this.deadline,
+    required this.title,
+    required this.description,
+    required this.deadline,
     this.createAt,
     this.orderOfImportance,
     this.priorityOrder,
@@ -24,10 +24,9 @@ class TaskModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'title': title,
       'description': description,
-      'deadline': deadline?.millisecondsSinceEpoch,
+      'deadline': deadline.millisecondsSinceEpoch,
       'createAt': createAt?.millisecondsSinceEpoch,
       'orderOfImportance': orderOfImportance,
       'priorityOrder': priorityOrder,
@@ -37,12 +36,12 @@ class TaskModel {
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      id: map['id'] ?? '',
+      id: map['id'],
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       deadline: map['deadline'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['deadline'])
-          : null,
+          : DateTime.now(),
       createAt: DateTime.now(),
       orderOfImportance: map['orderOfImportance'] ?? 0,
       priorityOrder: map['priorityOrder'] ?? 0,

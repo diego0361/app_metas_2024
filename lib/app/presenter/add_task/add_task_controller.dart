@@ -33,13 +33,15 @@ class AddTaskController extends GetxController with LoaderManager {
   Future<void> addTask() async {
     try {
       String deadlineString = deadlineController.text;
-      DateTime? deadline;
+      DateTime deadline;
 
       if (RegExp(r'\d{2}/\d{2}/\d{4}').hasMatch(deadlineString)) {
         List<String> parts = deadlineString.split('/');
         deadlineString = '${parts[2]}-${parts[1]}-${parts[0]}';
-        deadline = DateTime.tryParse(deadlineString);
-      } else {}
+        deadline = DateTime.tryParse(deadlineString)!;
+      } else {
+        return;
+      }
 
       TaskModel task = TaskModel(
         title: titleController.text,
@@ -69,9 +71,6 @@ class AddTaskController extends GetxController with LoaderManager {
 
   Future<void> updateTask(TaskModel task) async {
     try {
-      task.title = 'Novo Título';
-      task.description = 'Nova Descrição';
-
       await addTaskRepository.updateTask(task);
 
       await loadTasks();
