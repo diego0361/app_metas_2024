@@ -38,6 +38,16 @@ class AddTaskPage extends GetView<AddTaskController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: EdgeInsets.only(left: 28, bottom: 18, top: 0),
+            child: Text(
+              controller.isEditing ? 'Editar Tarefa' : 'Nova Tarefa',
+              style: TextStyle(
+                fontSize: 24,
+                color: AppColors.whiteColor,
+              ),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(

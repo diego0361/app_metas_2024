@@ -26,6 +26,16 @@ class MyHomeController extends GetxController with LoaderManager {
     }
   }
 
+  Future<void> updateTask(TaskModel task) async {
+    try {
+      await addTaskRepository.updateTask(task);
+
+      await loadTasks();
+    } catch (e) {
+      debugPrint('Erro ao atualizar a tarefa: $e');
+    }
+  }
+
   Future<void> deleteTask(String? taskId) async {
     try {
       await addTaskRepository.deleteTask(taskId!);

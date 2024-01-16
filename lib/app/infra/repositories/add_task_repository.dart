@@ -32,7 +32,7 @@ class AddTaskRepository {
 
   Future<void> updateTask(TaskModel task) async {
     try {
-      await _tasksCollection.doc(task.title).update(task.toMap());
+      await _tasksCollection.doc(task.id).update(task.toMap());
     } catch (e) {
       debugPrint('Erro ao atualizar a tarefa: $e');
     }

@@ -83,7 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   homeController.deleteTask(task.id);
                 },
                 task: task,
-                onTap: () {},
+                onUpgrade: () {
+                  Get.to(
+                    () => AddTaskPage(),
+                  );
+                },
               );
             });
           },
