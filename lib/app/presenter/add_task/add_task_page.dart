@@ -66,18 +66,36 @@ class AddTaskPage extends GetView<AddTaskController> {
               controller: controller.descriptionController,
             ),
           ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 8.0),
-          //   child: Text(
-          //     'Data limite',
-          //     style: TextStyle(color: AppColors.grey),
-          //     textAlign: TextAlign.start,
-          //   ),
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-          //   child: CustomFormFieldDate(inputFormatters: []),
-          // ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              'Data Limite',
+              style: TextStyle(color: AppColors.grey),
+              textAlign: TextAlign.start,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            child: GestureDetector(
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2101),
+                );
+
+                if (pickedDate != null) {
+                  controller.deadlineController.text =
+                      formatter.format(pickedDate);
+                }
+              },
+              child: AbsorbPointer(
+                child:
+                    CustomFormField(controller: controller.deadlineController),
+              ),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
