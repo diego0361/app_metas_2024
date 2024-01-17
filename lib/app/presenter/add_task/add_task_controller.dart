@@ -5,7 +5,6 @@ import '../../infra/models/task_model.dart';
 import '../../infra/repositories/add_task_repository.dart';
 import '../../shared/loader_manager.dart';
 import '../home/my_home_controller.dart';
-import 'add_task_page.dart';
 
 class AddTaskController extends GetxController with LoaderManager {
   final AddTaskRepository addTaskRepository;
@@ -76,31 +75,6 @@ class AddTaskController extends GetxController with LoaderManager {
     } catch (e) {
       debugPrint('Erro ao adicionar a tarefa: $e');
     }
-  }
-
-  Future<void> editTask(TaskModel task) async {
-    String deadlineString = deadlineController.text;
-    DateTime deadline;
-
-    if (RegExp(r'\d{2}/\d{2}/\d{4}').hasMatch(deadlineString)) {
-      List<String> parts = deadlineString.split('/');
-      deadlineString = '${parts[2]}-${parts[1]}-${parts[0]}';
-      deadline = DateTime.tryParse(deadlineString)!;
-    } else {
-      return;
-    }
-
-    titleController.text = task.title;
-    descriptionController.text = task.description;
-    deadlineController.text = DateTime.tryParse(deadline.toString()).toString();
-    orderOfImportanceController.text = task.orderOfImportance.toString();
-    priorityOrderController.text = task.priorityOrder.toString();
-
-    isEditing = true;
-    editingTask = task;
-
-    // Navegar para a página de edição
-    Get.toNamed(AddTaskPage.route);
   }
 
   Future<void> deleteTask(String taskId) async {

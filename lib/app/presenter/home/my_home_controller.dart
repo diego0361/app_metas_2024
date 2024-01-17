@@ -18,21 +18,16 @@ class MyHomeController extends GetxController with LoaderManager {
     update();
   }
 
+  void updateTaskStatus(TaskModel task) {
+    task.checked = !task.checked!;
+    update();
+  }
+
   Future<void> loadTasks() async {
     try {
       tasks.value = await addTaskRepository.getTasks();
     } catch (e) {
       debugPrint('Erro ao carregar as tarefas: $e');
-    }
-  }
-
-  Future<void> updateTask(TaskModel task) async {
-    try {
-      await addTaskRepository.updateTask(task);
-
-      await loadTasks();
-    } catch (e) {
-      debugPrint('Erro ao atualizar a tarefa: $e');
     }
   }
 

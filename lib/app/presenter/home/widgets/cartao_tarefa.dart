@@ -5,14 +5,14 @@ import '../../add_task/add_task_controller.dart';
 
 class CartaoTarefa extends StatelessWidget {
   final TaskModel task;
-  final VoidCallback? onUpgrade;
+  final VoidCallback? onUpdate;
   final VoidCallback onPressedDelete;
   final AddTaskController? controller;
 
   const CartaoTarefa({
     Key? key,
     required this.task,
-    this.onUpgrade,
+    this.onUpdate,
     this.controller,
     required this.onPressedDelete,
   }) : super(key: key);
@@ -26,9 +26,15 @@ class CartaoTarefa extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: InkWell(
-              onTap: onUpgrade,
-              child: const Icon(
-                Icons.edit,
+              onTap: () {
+                if (onUpdate != null) {
+                  onUpdate!();
+                }
+              },
+              child: Icon(
+                task.checked!
+                    ? Icons.check_box_outline_blank_rounded
+                    : Icons.check_box_rounded,
               ),
             ),
           ),

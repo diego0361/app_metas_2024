@@ -77,19 +77,19 @@ class _MyHomePageState extends State<MyHomePage> {
           itemCount: homeController.tasks.length,
           itemBuilder: (context, index) {
             var task = homeController.tasks[index];
-            return GetBuilder<MyHomeController>(builder: (controll) {
-              return CartaoTarefa(
-                onPressedDelete: () {
-                  homeController.deleteTask(task.id);
-                },
-                task: task,
-                onUpgrade: () {
-                  Get.to(
-                    () => AddTaskPage(),
-                  );
-                },
-              );
-            });
+            return GetBuilder<MyHomeController>(
+              builder: (controll) {
+                return CartaoTarefa(
+                  onPressedDelete: () {
+                    homeController.deleteTask(task.id);
+                  },
+                  task: task,
+                  onUpdate: () {
+                    homeController.updateTaskStatus(task);
+                  },
+                );
+              },
+            );
           },
         ),
       ),
