@@ -28,6 +28,10 @@ class AddTaskController extends GetxController with LoaderManager {
     loadTasks();
   }
 
+  void clearFields() {
+    task.value = TaskModel();
+  }
+
   Future<void> loadTasks() async {
     tasks.value = await addTaskRepository.getTasks();
   }
@@ -40,8 +44,9 @@ class AddTaskController extends GetxController with LoaderManager {
         await addTaskRepository.updateTask(task.value);
       }
 
-      await Get.find<MyHomeController>().loadTasks();
+      clearFields();
       Navigator.pop(Get.context!);
+      await Get.find<MyHomeController>().loadTasks();
     } catch (e) {
       debugPrint('Erro ao adicionar a tarefa: $e');
     }

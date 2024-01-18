@@ -18,7 +18,8 @@ class AddTaskPage extends GetView<AddTaskController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return controller.appForm.build(
+        child: Scaffold(
       extendBody: true,
       backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
@@ -68,6 +69,7 @@ class AddTaskPage extends GetView<AddTaskController> {
                 controller.task.value.description = value;
               },
               maxLines: 3,
+              minLines: 3,
             ),
             AppTextFormField(
               titleLabel: "Data Limite",
@@ -93,6 +95,6 @@ class AddTaskPage extends GetView<AddTaskController> {
           ],
         ),
       ),
-    );
+    ));
   }
 }

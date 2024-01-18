@@ -67,64 +67,67 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          '${widget.titleLabel} ${widget.validator == null ? '' : '*'}',
-          style: TextStyle(color: Colors.grey.shade800),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: widget.dateTimePicker ? _textEditingController : null,
-          decoration: InputDecoration(
-            hintText: widget.hintText,
-            border: border(),
-            errorBorder: border(Colors.red),
-            focusedBorder: border(AppColors.primaryColor),
-            enabledBorder: border(),
-            disabledBorder: border(),
-            focusedErrorBorder: border(),
-            filled: true,
-            isDense: true,
-            suffixIcon: widget.password
-                ? IconButton(
-                    icon: Icon(
-                      obscureText ? Icons.visibility : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        obscureText = !obscureText;
-                      });
-                    },
-                  )
-                : null,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '${widget.titleLabel} ${widget.validator == null ? '' : '*'}',
+            style: const TextStyle(color: AppColors.grey),
           ),
-          initialValue: widget.dateTimePicker && widget.initialValue != null
-              ? null
-              : widget.initialValue,
-          inputFormatters: widget.inputFormatters,
-          keyboardType: widget.keyboardType,
-          maxLines: widget.maxLines,
-          minLines: widget.minLines,
-          obscureText: obscureText,
-          onChanged: widget.onChanged,
-          onTap: () {
-            if (widget.dateTimePicker) {
-              dateTimePicker(
-                changeFieldInController: widget.changeFieldInController,
-              );
-            } else if (widget.onTap != null) {
-              widget.onTap!();
-            } else {
-              return;
-            }
-          },
-          readOnly: widget.readOnly,
-          validator: widget.validator,
-        ),
-      ],
+          const SizedBox(height: 8),
+          TextFormField(
+            controller: widget.dateTimePicker ? _textEditingController : null,
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              border: border(),
+              errorBorder: border(Colors.red),
+              focusedBorder: border(AppColors.primaryColor),
+              enabledBorder: border(),
+              disabledBorder: border(),
+              focusedErrorBorder: border(),
+              filled: true,
+              isDense: true,
+              suffixIcon: widget.password
+                  ? IconButton(
+                      icon: Icon(
+                        obscureText ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          obscureText = !obscureText;
+                        });
+                      },
+                    )
+                  : null,
+            ),
+            initialValue: widget.dateTimePicker && widget.initialValue != null
+                ? null
+                : widget.initialValue,
+            inputFormatters: widget.inputFormatters,
+            keyboardType: widget.keyboardType,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
+            obscureText: obscureText,
+            onChanged: widget.onChanged,
+            onTap: () {
+              if (widget.dateTimePicker) {
+                dateTimePicker(
+                  changeFieldInController: widget.changeFieldInController,
+                );
+              } else if (widget.onTap != null) {
+                widget.onTap!();
+              } else {
+                return;
+              }
+            },
+            readOnly: widget.readOnly,
+            validator: widget.validator,
+          ),
+        ],
+      ),
     );
   }
 
