@@ -12,6 +12,8 @@ class CustomFormField extends StatelessWidget {
   final bool readOnly;
   final String? initialValue;
   final String? labelText;
+  final int? maxLines;
+  final int? minLines;
 
   const CustomFormField({
     Key? key,
@@ -23,6 +25,8 @@ class CustomFormField extends StatelessWidget {
     this.readOnly = false,
     this.initialValue,
     this.labelText,
+    this.maxLines,
+    this.minLines,
   }) : super(key: key);
 
   @override
@@ -38,6 +42,8 @@ class CustomFormField extends StatelessWidget {
           return null;
         }
       }),
+      maxLines: maxLines,
+      minLines: minLines,
       focusNode: focusNode,
       controller: controller,
       readOnly: readOnly,

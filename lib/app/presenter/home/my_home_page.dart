@@ -84,9 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     homeController.deleteTask(task.id);
                   },
                   task: task,
-                  onUpdate: () {
+                  onCheckUpdate: () {
                     homeController.updateTaskStatus(task);
                   },
+                  onUpdate: () {},
                 );
               },
             );

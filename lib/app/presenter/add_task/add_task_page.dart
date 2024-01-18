@@ -17,10 +17,11 @@ class AddTaskPage extends GetView<AddTaskController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: AppColors.grey),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primaryColor.withOpacity(0.9),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -35,106 +36,114 @@ class AddTaskPage extends GetView<AddTaskController> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 28, bottom: 18, top: 0),
-            child: Text(
-              controller.isEditing ? 'Editar Tarefa' : 'Nova Tarefa',
-              style: TextStyle(
-                fontSize: 24,
-                color: AppColors.whiteColor,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 28, bottom: 18, top: 0),
+              child: Text(
+                controller.isEditing != false ? 'Editar Tarefa' : 'Nova Tarefa',
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: AppColors.whiteColor,
+                ),
               ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Título',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                'Título',
+                style: TextStyle(color: AppColors.grey),
+                textAlign: TextAlign.start,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.titleController,
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: CustomFormField(
+                controller: controller.titleController,
+              ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Descrição',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                'Descrição',
+                style: TextStyle(color: AppColors.grey),
+                textAlign: TextAlign.start,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.descriptionController,
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: CustomFormField(
+                controller: controller.descriptionController,
+                maxLines: 3,
+              ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Data Limite',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                'Data Limite',
+                style: TextStyle(color: AppColors.grey),
+                textAlign: TextAlign.start,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: GestureDetector(
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2101),
-                );
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: GestureDetector(
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2101),
+                  );
 
-                if (pickedDate != null) {
-                  controller.deadlineController.text =
-                      formatter.format(pickedDate);
-                }
-              },
-              child: AbsorbPointer(
-                child:
-                    CustomFormField(controller: controller.deadlineController),
+                  if (pickedDate != null) {
+                    controller.deadlineController.text =
+                        formatter.format(pickedDate);
+                  }
+                },
+                child: AbsorbPointer(
+                  child: CustomFormField(
+                      controller: controller.deadlineController),
+                ),
               ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Ordem de importância',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                'Ordem de importância',
+                style: TextStyle(color: AppColors.grey),
+                textAlign: TextAlign.start,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.orderOfImportanceController,
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: CustomFormField(
+                controller: controller.orderOfImportanceController,
+              ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Ordem de prioridade',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                'Ordem de prioridade',
+                style: TextStyle(color: AppColors.grey),
+                textAlign: TextAlign.start,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.priorityOrderController,
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: CustomFormField(
+                controller: controller.priorityOrderController,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
