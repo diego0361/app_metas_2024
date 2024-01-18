@@ -10,7 +10,9 @@ class AddTaskRepository {
 
   Future<ResponseModel> addTask(TaskModel task) async {
     try {
-      await _tasksCollection.add(task.toMap());
+      await _tasksCollection.add(task.toMap()).then((value) async {
+        await value.update({'id': value.id});
+      });
       return ResponseModel.success(task);
     } catch (e) {
       return ResponseModel.error("erro desconhecido$e");

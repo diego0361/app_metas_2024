@@ -20,6 +20,7 @@ class MyHomeController extends GetxController with LoaderManager {
 
   void updateTaskStatus(TaskModel task) {
     task.checked = !task.checked!;
+    addTaskRepository.updateTask(task);
     update();
   }
 

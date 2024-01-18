@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mask/mask/generic_maks.dart';
+import 'package:primeiro_2024/app/infra/models/defaults/app_string.dart';
 
 import '../../core/themes/app_colors.dart';
 import '../../shared/custom_form_field.dart';
@@ -43,104 +45,50 @@ class AddTaskPage extends GetView<AddTaskController> {
             Padding(
               padding: const EdgeInsets.only(left: 28, bottom: 18, top: 0),
               child: Text(
-                controller.isEditing != false ? 'Editar Tarefa' : 'Nova Tarefa',
+                controller.task.value.checked != false
+                    ? 'Editar Tarefa'
+                    : 'Nova Tarefa',
                 style: const TextStyle(
                   fontSize: 24,
                   color: AppColors.whiteColor,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Título',
-                style: TextStyle(color: AppColors.grey),
-                textAlign: TextAlign.start,
-              ),
+            AppTextFormField(
+              titleLabel: "Titulo",
+              initialValue: controller.task.value.title ?? '',
+              onChanged: (String value) {
+                controller.task.value.title = value;
+              },
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: CustomFormField(
-                controller: controller.titleController,
-              ),
+            AppTextFormField(
+              titleLabel: "Descrição",
+              initialValue: controller.task.value.description ?? '',
+              onChanged: (String value) {
+                controller.task.value.description = value;
+              },
+              maxLines: 3,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Descrição',
-                style: TextStyle(color: AppColors.grey),
-                textAlign: TextAlign.start,
-              ),
+            AppTextFormField(
+              titleLabel: "Data Limite",
+              onChanged: (String value) {
+                controller.task.value.deadline = stringToDateTime(value);
+              },
+              inputFormatters: [
+                GenericMask(mask: ["##/##/####"])
+              ],
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: CustomFormField(
-                controller: controller.descriptionController,
-                maxLines: 3,
-              ),
+            AppTextFormField(
+              titleLabel: "Ordem de Importância",
+              onChanged: (String value) {
+                controller.task.value.orderOfImportance = int.tryParse(value);
+              },
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Data Limite',
-                style: TextStyle(color: AppColors.grey),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: GestureDetector(
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2101),
-                  );
-
-                  if (pickedDate != null) {
-                    controller.deadlineController.text =
-                        formatter.format(pickedDate);
-                  }
-                },
-                child: AbsorbPointer(
-                  child: CustomFormField(
-                      controller: controller.deadlineController),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Ordem de importância',
-                style: TextStyle(color: AppColors.grey),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: CustomFormField(
-                controller: controller.orderOfImportanceController,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Ordem de prioridade',
-                style: TextStyle(color: AppColors.grey),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: CustomFormField(
-                controller: controller.priorityOrderController,
-              ),
+            AppTextFormField(
+              titleLabel: "Ordem de Prioridade",
+              onChanged: (String value) {
+                controller.task.value.priorityOrder = int.tryParse(value);
+              },
             ),
           ],
         ),

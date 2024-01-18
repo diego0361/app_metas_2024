@@ -3,9 +3,9 @@ import 'dart:convert';
 
 class TaskModel {
   String? id;
-  final String title;
-  final String description;
-  final DateTime deadline;
+  String? title;
+  String? description;
+  DateTime? deadline;
   DateTime? createAt;
   int? orderOfImportance;
   int? priorityOrder;
@@ -13,9 +13,9 @@ class TaskModel {
 
   TaskModel({
     this.id,
-    required this.title,
-    required this.description,
-    required this.deadline,
+    this.title,
+    this.description,
+    this.deadline,
     this.createAt,
     this.orderOfImportance,
     this.priorityOrder,
@@ -26,7 +26,7 @@ class TaskModel {
     return <String, dynamic>{
       'title': title,
       'description': description,
-      'deadline': deadline.millisecondsSinceEpoch,
+      'deadline': deadline?.millisecondsSinceEpoch,
       'createAt': createAt?.millisecondsSinceEpoch,
       'orderOfImportance': orderOfImportance,
       'priorityOrder': priorityOrder,
