@@ -32,12 +32,20 @@ class AddTaskController extends GetxController with LoaderManager {
     task.value = TaskModel();
   }
 
+  bool areFieldsValid() {
+    return !stringIsNullOrEmpty(task.value.title) &&
+        !stringIsNullOrEmpty(task.value.description) &&
+        task.value.deadline != null &&
+        task.value.orderOfImportance != null &&
+        task.value.priorityOrder != null;
+  }
+
   Future<void> loadTasks() async {
     tasks.value = await addTaskRepository.getTasks();
   }
 
   Future<void> addTask() async {
-    try {
+    if (areFieldsValid()) {
       if (stringIsNullOrEmpty(task.value.id)) {
         await addTaskRepository.addTask(task.value);
       } else {
@@ -45,10 +53,21 @@ class AddTaskController extends GetxController with LoaderManager {
       }
 
       clearFields();
+
       Navigator.pop(Get.context!);
       await Get.find<MyHomeController>().loadTasks();
-    } catch (e) {
-      debugPrint('Erro ao adicionar a tarefa: $e');
+      Get.snackbar(
+        'Sucesso',
+        "Tarrefa atualizada com sucesso",
+        colorText: Colors.green,
+      );
+    } else {
+      Get.snackbar(
+        'Erro',
+        'Preencha todos os campos obrigatórios.',
+        colorText: Colors.red,
+        backgroundColor: Colors.white,
+      );
     }
   }
 
