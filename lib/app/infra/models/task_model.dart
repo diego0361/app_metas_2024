@@ -24,7 +24,6 @@ class TaskModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'title': title,
       'description': description,
       'deadline': deadline?.millisecondsSinceEpoch,
@@ -37,12 +36,12 @@ class TaskModel {
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      id: map['id'] ?? '',
+      id: map['id'],
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       deadline: map['deadline'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['deadline'])
-          : null,
+          : DateTime.now(),
       createAt: DateTime.now(),
       orderOfImportance: map['orderOfImportance'] ?? 0,
       priorityOrder: map['priorityOrder'] ?? 0,

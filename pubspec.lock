@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.16"
+  asuka:
+    dependency: "direct main"
+    description:
+      name: asuka
+      sha256: "2cdff43305cbbe31faecbf275931e3a8f8e2ef91f8ffc2b961a3bbaafff5d959"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   async:
     dependency: transitive
     description:
@@ -168,6 +176,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  mask:
+    dependency: "direct main"
+    description:
+      name: mask
+      sha256: "27c1d4e8b463775b877e404f43c7ddd2e8b83af94dbfb314d9db4271db25135e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   matcher:
     dependency: transitive
     description:

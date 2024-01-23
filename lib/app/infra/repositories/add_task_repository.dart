@@ -1,17 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../models/defaults/response_model.dart';
 import '../models/task_model.dart';
 
 class AddTaskRepository {
   final CollectionReference _tasksCollection =
       FirebaseFirestore.instance.collection('tasks');
 
-  Future<void> addTask(TaskModel task) async {
+  Future<ResponseModel> addTask(TaskModel task) async {
     try {
-      await _tasksCollection.add(task.toMap());
+      await _tasksCollection.add(task.toMap()).then((value) async {
+        await value.update({'id': value.id});
+      });
+      return ResponseModel.success(task);
     } catch (e) {
-      debugPrint('Erro ao adicionar a tarefa: $e');
+      return ResponseModel.error("erro desconhecido$e");
     }
   }
 
@@ -30,7 +34,7 @@ class AddTaskRepository {
 
   Future<void> updateTask(TaskModel task) async {
     try {
-      await _tasksCollection.doc(task.title).update(task.toMap());
+      await _tasksCollection.doc(task.id).update(task.toMap());
     } catch (e) {
       debugPrint('Erro ao atualizar a tarefa: $e');
     }
@@ -39,7 +43,6 @@ class AddTaskRepository {
   Future<void> deleteTask(String taskId) async {
     try {
       await _tasksCollection.doc(taskId).delete();
-      
     } catch (e) {
       debugPrint('Erro ao excluir a tarefa: $e');
     }

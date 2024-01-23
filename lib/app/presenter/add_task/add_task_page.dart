@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:primeiro_2024/app/core/themes/app_colors.dart';
-import 'package:primeiro_2024/app/presenter/add_task/add_task_controller.dart';
-import 'package:primeiro_2024/app/shared/custom_form_field.dart';
+import 'package:mask/mask/generic_maks.dart';
+import 'package:primeiro_2024/app/infra/models/defaults/app_string.dart';
+
+import '../../core/themes/app_colors.dart';
+import '../../shared/custom_form_field.dart';
+import 'add_task_controller.dart';
 
 // ignore: must_be_immutable
 class AddTaskPage extends GetView<AddTaskController> {
@@ -15,11 +18,13 @@ class AddTaskPage extends GetView<AddTaskController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return controller.appForm.build(
+        child: Scaffold(
+      extendBody: true,
       backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: AppColors.grey),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primaryColor.withOpacity(0.9),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -34,79 +39,62 @@ class AddTaskPage extends GetView<AddTaskController> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Título',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 28, bottom: 18, top: 0),
+              child: Text(
+                controller.task.value.checked != false
+                    ? 'Editar Tarefa'
+                    : 'Nova Tarefa',
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: AppColors.whiteColor,
+                ),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.titleController,
+            AppTextFormField(
+              titleLabel: "Titulo",
+              initialValue: controller.task.value.title ?? '',
+              onChanged: (String value) {
+                controller.task.value.title = value;
+              },
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Descrição',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+            AppTextFormField(
+              titleLabel: "Descrição",
+              initialValue: controller.task.value.description ?? '',
+              onChanged: (String value) {
+                controller.task.value.description = value;
+              },
+              maxLines: 3,
+              minLines: 3,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.descriptionController,
+            AppTextFormField(
+              titleLabel: "Data Limite",
+              onChanged: (String value) {
+                controller.task.value.deadline = stringToDateTime(value);
+              },
+              inputFormatters: [
+                GenericMask(mask: ["##/##/####"])
+              ],
             ),
-          ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 8.0),
-          //   child: Text(
-          //     'Data limite',
-          //     style: TextStyle(color: AppColors.grey),
-          //     textAlign: TextAlign.start,
-          //   ),
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-          //   child: CustomFormFieldDate(inputFormatters: []),
-          // ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Ordem de importância',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
+            AppTextFormField(
+              titleLabel: "Ordem de Importância",
+              onChanged: (String value) {
+                controller.task.value.orderOfImportance = int.tryParse(value);
+              },
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.orderOfImportanceController,
+            AppTextFormField(
+              titleLabel: "Ordem de Prioridade",
+              onChanged: (String value) {
+                controller.task.value.priorityOrder = int.tryParse(value);
+              },
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              'Ordem de prioridade',
-              style: TextStyle(color: AppColors.grey),
-              textAlign: TextAlign.start,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: CustomFormField(
-              controller: controller.priorityOrderController,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
-    );
+    ));
   }
 }

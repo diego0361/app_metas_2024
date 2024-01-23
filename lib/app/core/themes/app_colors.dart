@@ -6,6 +6,7 @@ class AppColors {
   static const primaryColor = Color(0XFF171B30);
   static const scaffoldLightColor = Color(0xFFEBF2F7);
   static const scaffoldDarkColor = Color(0xFF1B2236);
+  static const boddyBackGroundColor = Color(0XFF171B30);
   static const cardDarkColor = Color(0xFF2A2E35);
 
   static const textPrimaryColor = Color(0xFF2E3033);

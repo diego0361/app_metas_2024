@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.6
   intl: ^0.19.0
   cloud_firestore: ^4.14.0
+  asuka: ^2.2.0
+  mask: ^1.0.5
 
 dev_dependencies:
   flutter_test:

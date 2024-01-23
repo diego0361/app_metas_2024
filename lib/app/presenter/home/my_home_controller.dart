@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:primeiro_2024/app/infra/models/task_model.dart';
-import 'package:primeiro_2024/app/infra/repositories/add_task_repository.dart';
-import 'package:primeiro_2024/app/shared/loader_manager.dart';
+
+import '../../infra/models/task_model.dart';
+import '../../infra/repositories/add_task_repository.dart';
+import '../../shared/loader_manager.dart';
 
 class MyHomeController extends GetxController with LoaderManager {
   final AddTaskRepository addTaskRepository;
@@ -17,6 +18,12 @@ class MyHomeController extends GetxController with LoaderManager {
     update();
   }
 
+  void updateTaskStatus(TaskModel task) {
+    task.checked = !task.checked!;
+    addTaskRepository.updateTask(task);
+    update();
+  }
+
   Future<void> loadTasks() async {
     try {
       tasks.value = await addTaskRepository.getTasks();
@@ -25,31 +32,13 @@ class MyHomeController extends GetxController with LoaderManager {
     }
   }
 
-  Future<void> addTask(TaskModel task) async {
-    try {
-      await addTaskRepository.addTask(task);
-
-      await loadTasks();
-    } catch (e) {
-      debugPrint('Erro ao adicionar a tarefa: $e');
-    }
-  }
-
-  Future<void> updateTask(TaskModel task) async {
-    try {
-      await addTaskRepository.updateTask(task);
-
-      await loadTasks();
-    } catch (e) {
-      debugPrint('Erro ao atualizar a tarefa: $e');
-    }
-  }
-
   Future<void> deleteTask(String? taskId) async {
     try {
       await addTaskRepository.deleteTask(taskId!);
 
+      await Get.find<MyHomeController>().loadTasks();
       await loadTasks();
+      update();
     } catch (e) {
       debugPrint('Erro ao excluir a tarefa: $e');
     }
